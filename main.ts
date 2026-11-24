@@ -1,15 +1,16 @@
+// The Long Roast
+// Revision build — writes Neon's FINAL line verbatim to entry.txt in the
+// grader's output dir ($MAKEFUN_OUTPUT_DIR, else /output, else ./output).
+// entry.txt holds exactly the line, no trailing newline.
+
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const roast =
-  "My AI agent is so useless it autocompletes my sentences wrong, then charges me rent for living in my own codebase.";
+const LINE =
+  'My AI agent ran \'ls\' 43 times in an empty folder like a guy reopening the fridge expecting new food, burned $11.80 in tokens, and emailed my boss: "Codebase stolen — call legal."';
 
-// Gate: the entry must be one line, 1–200 chars, not only whitespace.
-const line = roast.trim();
-if (line.length < 1 || line.length > 200 || line.includes("\n")) {
-  throw new Error(`invalid roast line: ${line.length} chars`);
-}
+const outDir =
+  process.env.MAKEFUN_OUTPUT_DIR || "/output" || "./output";
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), line + "\n", "utf8");
+writeFileSync(join(outDir, "entry.txt"), LINE, "utf8");
